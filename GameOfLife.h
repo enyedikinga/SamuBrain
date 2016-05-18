@@ -56,12 +56,47 @@
 #include <QDebug>
 #include <sstream>
 #include "SamuBrain.h"
+#include <QThread>
+#include <QDebug>
+#include <sstream>
+#include "SamuQl.h"
+#include <vector>
+#include "cv.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 class GameOfLife : public QThread
 {
     Q_OBJECT
-
+	
+	int conwayCounter = 0;
+	
+	int index = 0;
+	int secondIndex = 0;
+	int secondMovieStartIndex = 0;
+	
     int m_w {40}, m_h {30};
+	
+	
+	
+	int drawIndex = 0;
+    int totalFiles = 0;
+    std::vector<cv::Mat> locationsMat;
+
+    std::vector<cv::Mat>MatBinPictures1;
+    cv::Mat Binary_Image1;
+    std::vector<cv::Mat>MatBinPictures2;
+    cv::Mat Binary_Image2;
+
+
+   
+    void drawThings ( int **lattice );
+	void drawThings2 ( int **lattice );
+	void fromFile();
+	void fromFile2();
+	
+	
 
     int ***lattices;
     int latticeIndex;
@@ -90,7 +125,11 @@ class GameOfLife : public QThread
     void red ( int **lattice, int x, int y, int color );
     void green ( int **lattice, int x, int y, int color );
     void blue ( int **lattice, int x, int y, int color );
-
+    
+    void black ( int **lattice, int x, int y, int color );
+    void brown ( int **lattice, int x, int y, int color );
+    void yellow ( int **lattice, int x, int y, int color );
+    
     void clear_lattice ( int **nextLattice );
     void fill_lattice ( int **nextLattice, int color );
 
